@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:portfolio/apps/home/home.dart';
-import 'package:portfolio/apps/users/users.dart';
-import 'package:portfolio/config/config.dart';
+import 'package:dartserverstarter/apps/home/home.dart';
+import 'package:dartserverstarter/apps/users/users.dart';
+import 'package:dartserverstarter/core/database.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
@@ -36,11 +36,20 @@ class Initializer {
         ),
       );
 
+  // Establidh Mongodb connection
+  var db = DatabaseSetupConnection.instance
+    ..uriString('mongodb://localhost:27017/dart-server-starter')
+    ..connect().then((value) {
+      print('Database Connection Established Successfully');
+    }, onError: (e) {
+      print(e.toString());
+      exit(1);
+    });
+
   // Start Server
   FutureOr<HttpServer> call() async {
     registerRoute();
     var handler = pipeline.addHandler(_shelfRouter);
-    return await server_io.serve(
-        handler, ServerConfig.hostname, ServerConfig.port);
+    return await server_io.serve(handler, 'localhost', 8080);
   }
 }

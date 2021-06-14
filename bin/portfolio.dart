@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:portfolio/config/config.dart';
-import 'package:portfolio/initializer.dart';
+import 'package:dartserverstarter/initializer.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';
 
 void main(List<String> args) async {
@@ -8,6 +7,7 @@ void main(List<String> args) async {
 
   withHotreload(() async {
     server = await Initializer().call();
+    print('Server started at: http://${server.address.host}:${server.port}');
     return server;
   });
 
@@ -15,7 +15,4 @@ void main(List<String> args) async {
   ///
   /// Uncomment this line in production (recommended)
   /// server.autoCompress = true;
-
-  print(
-      'Server started at: http://${ServerConfig.hostname}:${ServerConfig.port}');
 }
