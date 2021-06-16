@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dartserverstarter/apps/home/home.dart';
 import 'package:dartserverstarter/apps/users/users.dart';
-import 'package:dartserverstarter/core/database.dart';
+import 'package:dartserverstarter/utils/database.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as server_io;
-import 'package:shelf_static/shelf_static.dart';
-import 'apps/404/404_handler.dart';
+import 'utils/404_handler.dart';
 
 class Initializer {
   // Initialized Router
@@ -16,11 +14,18 @@ class Initializer {
 
   // Register App Routes
   void registerRoute() {
-    _shelfRouter.get('/', HomeController().registerRoute());
     _shelfRouter.mount('/users/', UsersController().registerRoute());
 
     // For Static Files
-    _shelfRouter.get('/assets/<file|.*>', createStaticHandler('public'));
+    // Create a public folder in the project root directory and the assets
+    // folder inside it containing assets files.
+    // The assets then can be accessible from path http:{address}/assets/{path}
+    //
+    // 1. Run 'dart pub add shelf_static'
+    // 2. import 'package:shelf_static/shelf_static.dart';
+    // 3. Uncomment the line below.
+    //
+    // _shelfRouter.get('/assets/<file|.*>', createStaticHandler('public'));
   }
 
   // Add Register Serverwide Middlewares

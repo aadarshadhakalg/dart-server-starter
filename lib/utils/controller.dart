@@ -1,4 +1,4 @@
-import 'package:dartserverstarter/apps/404/404_handler.dart';
+import 'package:dartserverstarter/utils/404_handler.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 /// Abstract Web Controller Class
