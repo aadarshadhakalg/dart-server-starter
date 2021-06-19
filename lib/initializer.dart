@@ -8,6 +8,9 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as server_io;
 import 'utils/404_handler.dart';
 
+export 'dart:io';
+export 'package:shelf_hotreload/shelf_hotreload.dart';
+
 class Initializer {
   // Initialized Router
   final _shelfRouter = Router(notFoundHandler: NotFoundHandler());
@@ -45,9 +48,9 @@ class Initializer {
   var db = DatabaseSetupConnection.instance
     ..uriString('mongodb://localhost:27017/dart-server-starter')
     ..connect().then((value) {
-      print('Database Connection Established Successfully');
+      stdout.write('Database Connection Established Successfully');
     }, onError: (e) {
-      print(e.toString());
+      stderr.write(e);
       exit(1);
     });
 

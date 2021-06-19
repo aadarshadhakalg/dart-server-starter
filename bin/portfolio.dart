@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'package:dartserverstarter/initializer.dart';
-import 'package:shelf_hotreload/shelf_hotreload.dart';
 
 void main(List<String> args) async {
   HttpServer server;
