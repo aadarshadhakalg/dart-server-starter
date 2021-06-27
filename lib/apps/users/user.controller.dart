@@ -37,9 +37,9 @@ class UsersController extends WebController {
               return Response.internalServerError(body: 'Insecure Password');
             }
 
-            // if(UserServices.instance.checkForDuplicateEmail()){
-            //   return Response.internalServerError(body: 'Email Already Exists');
-            // }
+            if(await UserServices.instance.checkForDuplicateEmail(data['email'])){
+              return Response.internalServerError(body: 'Email Already Exists');
+            }
 
             var res = await UserServices.instance.addUser(User.fromMap(data));
             return res.fold(

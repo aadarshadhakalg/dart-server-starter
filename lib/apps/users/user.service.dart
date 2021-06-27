@@ -10,13 +10,11 @@ class UserServices {
     userCollection = DatabaseSetupConnection.instance.db?.collection('users');
   }
   static UserServices get instance => _instance ??= UserServices._internal();
-
   DbCollection? userCollection;
 
   Future<Either<Map<String,dynamic>?,AppError>> addUser(User user) async {
     try{
     var resp = await userCollection?.insertOne(user.toMap());
-    print(resp?.document);
     return Left(resp?.document);
     }catch (e){
       return Right(DatabaseInsertionError());
@@ -26,8 +24,13 @@ class UserServices {
   Future<dynamic> updateUser(User user) async {
   }
 
-  // bool checkForDuplicateEmail() {
-  //   var res = await userCollection?.findOne('email');
-  // }
+
+  Future<bool> checkForDuplicateEmail(String email) async {
+    var res = await userCollection?.findOne({'email':'$email'});
+    if(res == null){
+      return false;
+    }
+    return true;
+  }
 
 }
