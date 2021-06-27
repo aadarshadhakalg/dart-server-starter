@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   args: ^2.0.0
+  dartz: ^0.10.0-nullsafety.2
   mongo_dart: ^0.7.0+2
   path: ^1.8.0
   shelf_cors_headers: ^0.1.1

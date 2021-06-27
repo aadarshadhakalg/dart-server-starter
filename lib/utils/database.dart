@@ -15,10 +15,11 @@ class DatabaseSetupConnection {
   }
 
   Future<Db?> connect() async {
-    var db = Db(address!);
+    var _database = Db(address!);
     try {
-      await db.open();
-      return db;
+      await _database.open();
+      db = _database;
+      return _database;
     } catch (e) {
       throw Exception(e.toString());
     }
