@@ -43,16 +43,17 @@ class User {
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
 
   @override
-  String toString() => 'User(username: $username, email: $email, password: $password)';
+  String toString() =>
+      'User(username: $username, email: $email, password: $password)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is User &&
-      other.username == username &&
-      other.email == email &&
-      other.password == password;
+        other.username == username &&
+        other.email == email &&
+        other.password == password;
   }
 
   @override

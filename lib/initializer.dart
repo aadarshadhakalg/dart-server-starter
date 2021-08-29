@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dartserverstarter/apps/users/user.controller.dart';
 import 'package:dartserverstarter/utils/database.dart';
+import 'package:postgresql2/pool.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as server_io;
+import 'apps/users/user.controller.dart';
 import 'utils/404_handler.dart';
 
 export 'dart:io';
@@ -45,11 +46,13 @@ class Initializer {
       );
 
   Future<void> connectDatabase() async {
-    // Establidh Mongodb connection
+    // Establidh Postgresql connection
+    // Keep ths in .env later
+    String dbUrl = 'postgres://aadarsha:ad@localhost:5432/aadarsha';
     try {
-      var db = DatabaseSetupConnection.instance
-        ..uriString('mongodb://localhost:27017/starter');
-      await db.connect();
+      Pool pool = Pool(dbUrl, minConnections: 2, maxConnections: 5);
+      await pool.start();
+      database = await pool.connect();
       stdout.write('Database Connection Established Successfully');
     } catch (e) {
       stderr.write(e);

@@ -10,8 +10,8 @@ dependencies:
   args: ^2.0.0
   crypto: ^3.0.1
   dartz: ^0.10.0-nullsafety.2
-  mongo_dart: ^0.7.0+2
   path: ^1.8.0
+  postgresql2: ^1.0.1
   shelf_cors_headers: ^0.1.1
   shelf_hotreload: ^0.0.2
   shelf_router: ^1.0.0
