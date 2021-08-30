@@ -1,61 +1,68 @@
 import 'dart:convert';
+import 'package:dartserverstarter/utils/utils.dart';
 
-class User {
-  final String username;
-  final String email;
-  final String password;
-  User({
-    required this.username,
-    required this.email,
-    required this.password,
+class Account {
+  int? uid;
+  String? name;
+  String? password;
+  String? email;
+  DateTime? created_on;
+  DateTime? last_login;
+  Account({
+    this.uid,
+    this.name,
+    this.password,
+    this.email,
+    this.created_on,
+    this.last_login,
   });
 
-  User copyWith({
-    String? username,
-    String? email,
+  Account copyWith({
+    int? uid,
+    String? name,
     String? password,
+    String? email,
+    DateTime? created_on,
+    DateTime? last_login,
   }) {
-    return User(
-      username: username ?? this.username,
-      email: email ?? this.email,
+    return Account(
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
       password: password ?? this.password,
+      email: email ?? this.email,
+      created_on: created_on ?? this.created_on,
+      last_login: last_login ?? this.last_login,
     );
+  }
+
+  void setPassword(String password) {
+    this.password = hashPassword(password);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'username': username,
-      'email': email,
+      'uid': uid,
+      'name': name,
       'password': password,
+      'email': email,
+      'created_on': created_on?.millisecondsSinceEpoch,
+      'last_login': last_login?.millisecondsSinceEpoch,
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      username: map['username'],
-      email: map['email'],
+  factory Account.fromMap(Map<String, dynamic> map) {
+    return Account(
+      uid: map['uid'],
+      name: map['name'],
       password: map['password'],
+      email: map['email'],
+      created_on: DateTime.fromMillisecondsSinceEpoch(map['created_on']),
+      last_login: DateTime.now(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
-
-  @override
-  String toString() =>
-      'User(username: $username, email: $email, password: $password)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is User &&
-        other.username == username &&
-        other.email == email &&
-        other.password == password;
-  }
-
-  @override
-  int get hashCode => username.hashCode ^ email.hashCode ^ password.hashCode;
+  factory Account.fromJson(String source) =>
+      Account.fromMap(json.decode(source));
 }

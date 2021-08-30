@@ -5,10 +5,10 @@ import 'package:shelf/shelf.dart';
 class BlogController extends WebController {
   @override
   Router registerRoute() {
-    router.get('/blogs/', listBlogs);
-    router.post('/blogs/', addBlog);
-    router.patch('/blogs', updateBlog);
-    router.delete('/blogs/', deleteBlog);
+    router.get('/', listBlogs);
+    router.post('/add/', addBlog);
+    router.patch('/update/<id>/', updateBlog);
+    router.delete('/delete/<id>/', deleteBlog);
     return super.registerRoute();
   }
 
@@ -20,11 +20,11 @@ class BlogController extends WebController {
     return Response.ok('body');
   }
 
-  Future<Response> updateBlog(Request request) async {
+  Future<Response> updateBlog(Request request, String id) async {
     return Response.ok('');
   }
 
-  Future<Response> deleteBlog(Request request) async {
+  Future<Response> deleteBlog(Request request, String id) async {
     return Response.ok('');
   }
 }

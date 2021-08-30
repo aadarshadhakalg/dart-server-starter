@@ -5,7 +5,7 @@ class Blog {
   int blog_id;
   String title;
   String content;
-  User author;
+  Account author;
   DateTime updated_on;
   Blog({
     required this.blog_id,
@@ -19,7 +19,7 @@ class Blog {
     int? blog_id,
     String? title,
     String? content,
-    User? author,
+    Account? author,
     DateTime? updated_on,
   }) {
     return Blog(
@@ -46,7 +46,7 @@ class Blog {
       blog_id: map['blog_id'],
       title: map['title'],
       content: map['content'],
-      author: User.fromMap(map['author']),
+      author: Account.fromMap(map['author']),
       updated_on: DateTime.fromMillisecondsSinceEpoch(map['updated_on']),
     );
   }

@@ -63,7 +63,7 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   coverage:
     dependency: transitive
     description:
@@ -78,13 +78,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  dartz:
+  dart_jsonwebtoken:
     dependency: "direct main"
     description:
-      name: dartz
+      name: dart_jsonwebtoken
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0-nullsafety.2"
+    version: "2.3.2"
   dio:
     dependency: "direct dev"
     description:
@@ -211,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.0"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.2"
   pool:
     dependency: transitive
     description:
