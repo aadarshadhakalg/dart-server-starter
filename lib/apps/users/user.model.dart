@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:dartserverstarter/utils/utils.dart';
+import 'package:dartserverstarter/apps/users/roles.dart';
+import 'package:dartserverstarter/utils/auth_helpers.dart';
 
 class Account {
   int? uid;
@@ -8,6 +9,7 @@ class Account {
   String? email;
   DateTime? created_on;
   DateTime? last_login;
+  Roles? roles;
   Account({
     this.uid,
     this.name,
@@ -15,6 +17,7 @@ class Account {
     this.email,
     this.created_on,
     this.last_login,
+    this.roles,
   });
 
   Account copyWith({
@@ -24,6 +27,7 @@ class Account {
     String? email,
     DateTime? created_on,
     DateTime? last_login,
+    Roles? roles,
   }) {
     return Account(
       uid: uid ?? this.uid,
@@ -32,6 +36,7 @@ class Account {
       email: email ?? this.email,
       created_on: created_on ?? this.created_on,
       last_login: last_login ?? this.last_login,
+      roles: roles ?? this.roles,
     );
   }
 
@@ -47,6 +52,7 @@ class Account {
       'email': email,
       'created_on': created_on?.millisecondsSinceEpoch,
       'last_login': last_login?.millisecondsSinceEpoch,
+      'roles': roles,
     };
   }
 
@@ -56,8 +62,17 @@ class Account {
       name: map['name'],
       password: map['password'],
       email: map['email'],
-      created_on: DateTime.fromMillisecondsSinceEpoch(map['created_on']),
+      created_on: map['created_on'] is DateTime
+          ? map['created_on']
+          : DateTime.fromMillisecondsSinceEpoch(
+              map['created_on'],
+            ),
       last_login: DateTime.now(),
+      roles: map['roles'] == Roles.AD.toString()
+          ? Roles.AD
+          : map['roles'] == Roles.ST.toString()
+              ? Roles.ST
+              : Roles.GU,
     );
   }
 

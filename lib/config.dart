@@ -13,4 +13,8 @@ class Config {
   static const String DBNAME = 'aadarsha';
   static const int MINPOOLCONNECTION = 2;
   static const int MAXPOOLCONNECTION = 5;
+
+  /// This should be random String
+  /// It's used as a salt in password hashing and secret key for JWT Token
+  static const String SERVERKEY = 'Xusia7fsdf9sfyshHfhgfusydgfisfkfs';
 }
