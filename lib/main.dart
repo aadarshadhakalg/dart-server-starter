@@ -55,7 +55,7 @@ class Initializer {
   // Start Server
   FutureOr<HttpServer> call() async {
     await connectDatabase();
-    var handler = MainAppController().registerRoute();
+    var handler = MainAppController().coreHandler();
     return await server_io.serve(
       handler,
       Config.SERVER_HOST,

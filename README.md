@@ -1,1 +1,9 @@
-A web server built using [Shelf](https://pub.dev/packages/shelf).
+# Dart Server Starter  ( Hobby Project )
+
+## Features:
+- Permission based JWT Authentication
+- Postgres SQL Setup
+- Extension of Request Class
+- Abstract WebController
+
+

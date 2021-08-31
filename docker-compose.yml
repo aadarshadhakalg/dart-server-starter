@@ -1,0 +1,22 @@
+version: "3.9"
+services: 
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: aadarsha
+      POSTGRES_PASSWORD: ad
+      POSTGRES_DB: aadarsha
+      
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  dartserverstarter:
+    image: dartserverstarter
+    restart: always
+    ports: 
+      - 80:80
