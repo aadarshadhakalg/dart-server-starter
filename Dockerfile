@@ -19,4 +19,4 @@ COPY --from=build /app/lib/main /app/lib/
 
 # Start server.
 EXPOSE 8080
-CMD ["/app/lib/server"]
+CMD ["/app/lib/main"]

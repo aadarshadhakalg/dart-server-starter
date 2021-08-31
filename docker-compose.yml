@@ -3,6 +3,8 @@ services:
   db:
     image: postgres
     restart: always
+    ports: 
+      - 5432:5432
     environment:
       POSTGRES_USER: aadarsha
       POSTGRES_PASSWORD: ad
@@ -19,4 +21,4 @@ services:
     image: dartserverstarter
     restart: always
     ports: 
-      - 80:80
+      - 8000:8000
