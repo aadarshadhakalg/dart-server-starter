@@ -1,6 +1,6 @@
 import 'package:dartserverstarter/apps/users/user.model.dart';
-import 'package:dartserverstarter/utils/database.dart';
-import 'package:dartserverstarter/utils/error.dart';
+import 'package:dartserverstarter/utils/database_service.dart';
+import 'package:dartserverstarter/utils/error_classes.dart';
 import 'package:postgresql2/postgresql.dart';
 
 class UserServices {
@@ -16,7 +16,7 @@ class UserServices {
     ''';
 
     try {
-      var res = await database.execute(command);
+      var res = await DatabaseService().database.execute(command);
       print(res);
     } on PostgresqlException catch (e) {
       if (e.serverMessage?.code == '23505') {
@@ -31,7 +31,7 @@ class UserServices {
     String command = "SELECT * FROM public.accounts WHERE email = \'$email\';";
 
     Row userRow;
-    var rows = await database.query(command).toList();
+    var rows = await DatabaseService().database.query(command).toList();
     if (rows.isNotEmpty) {
       userRow = rows.first;
       return Account.fromMap(
@@ -48,7 +48,7 @@ class UserServices {
     String command = 'SELECT * FROM public.accounts WHERE uid = $uid;';
 
     Row userRow;
-    var rows = await database.query(command).toList();
+    var rows = await DatabaseService().database.query(command).toList();
     if (rows.isNotEmpty) {
       userRow = rows.first;
       return Account.fromMap(
@@ -65,7 +65,7 @@ class UserServices {
     String command =
         'UPDATE public.accounts SET "password"=\'$newPassword\' WHERE uid=40;';
 
-    var affected = await database.execute(command);
+    var affected = await DatabaseService().database.execute(command);
     if (affected == 1) {
       return true;
     } else {

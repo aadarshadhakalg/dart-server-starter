@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:dartserverstarter/apps/users/roles.dart';
-import 'package:dartserverstarter/utils/auth_helpers.dart';
+import 'package:dartserverstarter/apps/authorization/auth_services.dart';
+import 'package:dartserverstarter/apps/authorization/request_user.dart';
 
 class Account {
   int? uid;
@@ -41,7 +41,7 @@ class Account {
   }
 
   void setPassword(String password) {
-    this.password = hashPassword(password);
+    this.password = AuthServices.hashPassword(password);
   }
 
   Map<String, dynamic> toMap() {

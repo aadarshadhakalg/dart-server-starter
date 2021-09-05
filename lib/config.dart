@@ -5,7 +5,7 @@ class Config {
   static const String SERVER_PORT = '8000';
   static const bool PRODUCTION = false;
 
-  /// POSTGRES CONFIG
+  /// POSTGRES CONFIG ( FOR RESOURCE SERVER )
   static const String DBUSERNAME = 'aadarsha';
   static const String DBPASSWORD = 'ad';
   static const String DBHOST = 'db';
@@ -13,6 +13,10 @@ class Config {
   static const String DBNAME = 'aadarsha';
   static const int MINPOOLCONNECTION = 2;
   static const int MAXPOOLCONNECTION = 5;
+
+  /// REDIS SETUP ( FOR AUTHORIZATION SERVER )
+  static const String RedisHost = 'redis';
+  static const String RedisPort = '6379';
 
   /// This should be random String
   /// It's used as a salt in password hashing and secret key for JWT Token

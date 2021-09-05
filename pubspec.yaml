@@ -12,6 +12,7 @@ dependencies:
   dart_jsonwebtoken: ^2.3.2
   path: ^1.8.0
   postgresql2: ^1.0.1
+  redis: ^2.0.0
   shelf_cors_headers: ^0.1.1
   shelf_hotreload: ^0.0.2
   shelf_router: ^1.0.0

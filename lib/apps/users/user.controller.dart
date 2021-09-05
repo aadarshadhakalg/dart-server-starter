@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'package:dartserverstarter/apps/authorization/auth_services.dart';
 import 'package:dartserverstarter/apps/users/user.model.dart';
 import 'package:dartserverstarter/apps/users/user.service.dart';
-import 'package:dartserverstarter/utils/controller.dart';
-import 'package:dartserverstarter/utils/error.dart';
-import 'package:dartserverstarter/utils/auth_helpers.dart';
-import 'package:dartserverstarter/utils/request_user.dart';
+import 'package:dartserverstarter/utils/abstract_controller.dart';
+import 'package:dartserverstarter/utils/error_classes.dart';
+import 'package:dartserverstarter/apps/authorization/request_user.dart';
 import 'package:shelf/shelf.dart';
 import 'package:dartserverstarter/utils/request_extension.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -36,10 +36,11 @@ class UsersController extends WebController {
         await UserServices.instance.insert(account);
         Account? dbAccount =
             await UserServices.instance.getAccountByEmail(account.email!);
-        String userToken = generateJwt(dbAccount!.uid!, dbAccount.roles!);
+        var userToken =
+            AuthServices.generateJwt(dbAccount!.uid!, dbAccount.roles!);
         return Response.ok(
           {
-            'Token': userToken,
+            'Token': userToken.accessToken,
           }.toString(),
         );
       } else {
@@ -64,10 +65,11 @@ class UsersController extends WebController {
         account =
             await UserServices.instance.getAccountByEmail(payload['email']);
         if (account != null) {
-          if (hashPassword(payload['password']) == account.password) {
+          if (AuthServices.hashPassword(payload['password']) ==
+              account.password) {
             return Response.ok(
               {
-                'Token': generateJwt(account.uid!, account.roles!),
+                'Token': AuthServices.generateJwt(account.uid!, account.roles!),
               }.toString(),
             );
           } else {
@@ -88,7 +90,7 @@ class UsersController extends WebController {
   }
 
   Future<Response> changePassword(Request request) async {
-    RequestUser user = request.user();
+    RequestUser user = request.user;
     if (user is AuthenticatedUser) {
       var payload = await request.data();
       if (payload.containsKey('old_password') &&
@@ -96,10 +98,11 @@ class UsersController extends WebController {
         if (payload['old_password'] != payload['new_password']) {
           int id = user.uid;
           Account? account = await UserServices.instance.getAccountByUID(id);
-          if (account!.password == hashPassword(payload['old_password'])) {
+          if (account!.password ==
+              AuthServices.hashPassword(payload['old_password'])) {
             await UserServices.instance.changePassword(
               id,
-              hashPassword(payload['new_password']),
+              AuthServices.hashPassword(payload['new_password']),
             );
             return Response.ok('Your Password is Changed');
           } else {

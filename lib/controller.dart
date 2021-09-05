@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dartserverstarter/utils/controller.dart';
+import 'package:dartserverstarter/utils/abstract_controller.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';

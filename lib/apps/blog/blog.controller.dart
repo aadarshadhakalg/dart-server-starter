@@ -1,4 +1,4 @@
-import 'package:dartserverstarter/utils/controller.dart';
+import 'package:dartserverstarter/utils/abstract_controller.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf/shelf.dart';
 

@@ -2,13 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dartserverstarter/config.dart';
 import 'package:dartserverstarter/controller.dart';
-import 'package:dartserverstarter/utils/database.dart';
-import 'package:postgresql2/pool.dart';
+import 'package:dartserverstarter/utils/database_service.dart';
 import 'package:shelf_hotreload/shelf_hotreload.dart';
 import 'package:shelf/shelf_io.dart' as server_io;
-
-export 'dart:io';
-export 'package:shelf_hotreload/shelf_hotreload.dart';
 
 void main(List<String> args) async {
   late HttpServer server;
@@ -32,29 +28,23 @@ void main(List<String> args) async {
 }
 
 class Initializer {
-  Future<void> connectDatabase() async {
-    // Establidh Postgresql connection
-    // Keep ths in .env later
-    String dbUrl =
-        'postgres://${Config.DBUSERNAME}:${Config.DBPASSWORD}@${Config.DBHOST}:${Config.DBPORT}/${Config.DBNAME}';
-    try {
-      Pool pool = Pool(
-        dbUrl,
-        minConnections: Config.MINPOOLCONNECTION,
-        maxConnections: Config.MAXPOOLCONNECTION,
-      );
-      await pool.start();
-      database = await pool.connect();
-      stdout.write('Database Connection Established Successfully');
-    } catch (e) {
-      stderr.write(e);
-      exit(1);
-    }
+  Future<void> startDatabaseService() async {
+    await DatabaseService().startPostGres(
+      dbusername: Config.DBUSERNAME,
+      dbpassword: Config.DBPASSWORD,
+      dbhost: Config.DBHOST,
+      dbport: Config.DBPORT,
+      dbname: Config.DBNAME,
+      minPool: Config.MINPOOLCONNECTION,
+      maxPool: Config.MAXPOOLCONNECTION,
+    );
+
+    await DatabaseService().startRedis(Config.RedisHost, Config.RedisPort);
   }
 
   // Start Server
   FutureOr<HttpServer> call() async {
-    await connectDatabase();
+    await startDatabaseService();
     var handler = MainAppController().coreHandler();
     return await server_io.serve(
       handler,
